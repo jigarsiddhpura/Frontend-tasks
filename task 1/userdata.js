@@ -2,30 +2,32 @@
 // import axios from 'axios';
 // const axios = import('axios').default;
 
-// const sendGetRequest = async () => {
-// 	try {
-// 		const response = await axios.get('https://jsonplaceholder.typicode.com/users')
-// 		console.log(response);
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// };
-
-// sendGetRequest();
-
 const sendGetRequest = async () => {
 	try {
-		fetch('https://jsonplaceholder.typicode.com/users')
-			.then(response => response.json())
-			.then(dataList => appendData(dataList))
+		const response = await axios.get('https://jsonplaceholder.typicode.com/users')
+		// console.log(response.data);
+		appendData(response.data);
+
 	} catch (err) {
 		console.log(err);
 	}
 };
+
 sendGetRequest();
 
+// const sendGetRequest = async () => {
+// 	try {
+// 		fetch('https://jsonplaceholder.typicode.com/users')
+// 			.then(response => response.json())
+// 			.then(dataList => appendData(dataList))
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// };
+// sendGetRequest();
 
-async function appendData(dataList) {
+
+const appendData = async (dataList) => {
 	let html = ``;
 
 	for (var i = 0; i < dataList.length; i++) {
@@ -33,7 +35,7 @@ async function appendData(dataList) {
 		obj = dataList[i];
 
 		var id = obj["id"];
-		html += `<td> ${id} </td> `;
+		html += `<td class='userid'> ${id} </td> `;
 
 		var name = obj["name"];
 		html += `<td> ${name} </td> `;
@@ -61,7 +63,10 @@ async function appendData(dataList) {
 		var name = obj["company"]["name"];
 		var catchPhrase = obj["company"]["catchPhrase"];
 		var bs = obj["company"]["bs"];
-		html += `<td> ${name},${catchPhrase},${bs},  </td> `;
+		html += `<td> ${name}, ${catchPhrase}, ${bs},  </td> `;
+
+		html += `<td class='todo'> <a> To-Do List </a>  </td> `;
+		html += `<td class='album'> <a> Album </a>  </td> `;
 
 
 		html += `</tr>`;
@@ -69,4 +74,14 @@ async function appendData(dataList) {
 	}
 	document.getElementById("data").innerHTML = html;
 }
-// appendData(Object);
+
+todos = document.getElementsByClassName('todo');
+todos.addEventListener('click', () => {
+	userid = document.getElementsByClassName('userid');
+	location.replace('/to-dolist.html')
+});
+
+todos = document.getElementsByClassName('album');
+albums.addEventListener('dbclick', () => {
+	location.replace('/album.html')
+});
