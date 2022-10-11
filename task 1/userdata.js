@@ -15,6 +15,7 @@ const sendGetRequest = async () => {
 
 sendGetRequest();
 
+// CAN USE FETCH INSTEAD OF GET
 // const sendGetRequest = async () => {
 // 	try {
 // 		fetch('https://jsonplaceholder.typicode.com/users')
@@ -65,8 +66,7 @@ const appendData = async (dataList) => {
 		var bs = obj["company"]["bs"];
 		html += `<td> ${name}, ${catchPhrase}, ${bs},  </td> `;
 
-		html += `<td class='todo'> <a> To-Do List </a>  </td> `;
-		goto_todo(i);
+		html += `<td class='todo'> <a onclick="goto_todo(${i})"> To-Do List </a>  </td> `;
 
 		html += `<td class='album'> <a> Album </a>  </td> `;
 
@@ -75,19 +75,12 @@ const appendData = async (dataList) => {
 	document.getElementById("data").innerHTML = html;
 }
 
-// albums = document.getElementsByClassName('album');
-// albums.addEventListener('dbclick', () => {
-// 	location.replace('/album.html')
-// });
 
 const goto_todo = (i) => {
-	let todos = document.getElementsByClassName('todo');
-	todos[i].addEventListener('dbclick', () => {
-		userid = i+1;
+		alert("error")
+		userid = i + 1;
+		// export { userid };
+		export default userid;
 		location.replace('/to-dolist.html')
-	});
 }
 
-// t = document.body.firstElementChild;
-		// userid = t.rows[i].rowIndex;
-		// userid = document.getElementsByClassName(userid);
