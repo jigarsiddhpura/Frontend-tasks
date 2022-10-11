@@ -33,7 +33,7 @@ const appendData = async (dataList) => {
 
 	for (var i = 0; i < dataList.length; i++) {
 		html += `<tr>`;
-		obj = dataList[i];
+		var obj = dataList[i];
 
 		var id = obj["id"];
 		html += `<td class='userid'> ${id} </td> `;
@@ -76,11 +76,12 @@ const appendData = async (dataList) => {
 }
 
 
-const goto_todo = (i) => {
+goto_todo = (i) => {
 		alert("error")
-		userid = i + 1;
+		usid = i + 1;
 		// export { userid };
-		export default userid;
+		// export default userid;
+		window.localStorage.setItem("userid","usid");
 		location.replace('/to-dolist.html')
 }
 

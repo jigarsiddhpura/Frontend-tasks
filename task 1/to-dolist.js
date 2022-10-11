@@ -2,7 +2,7 @@ const sendGetRequest = async () => {
     try {
         const response = await axios.get('https://jsonplaceholder.typicode.com/todos')
         // console.log(response.data);
-        appendData(response.data);
+        appendlist(response.data);
 
     } catch (err) {
         console.log(err);
@@ -11,25 +11,26 @@ const sendGetRequest = async () => {
 
 sendGetRequest();
 
-import {userid} from './userdata.js';
-let usid = userid;
+// import {userid} from './userdata.js';
 
-const appendData = async (dataList) => {
+let usid = window.localStorage.getItem("userId");
+
+const appendlist = async (dataList) => {
     let html = ``;
 
     for (var i = 0; i < dataList.length; i++) {
+        var obj = dataList[i];
         if(dataList["userId"] == usid){
             html += `<tr>`;
-            obj = dataList[i];
-    
+
             var id = obj["id"];
             html += `<td> ${id} </td> `;
     
             var title = obj["title"];
             html += `<td> ${title} </td> `;
     
-            var username = obj["completed"];
-            if (username == 'true') {
+            var status = obj["completed"];
+            if (status == true) {
                 html += `<td> Completed </td> `;
             }
             else{
