@@ -66,22 +66,28 @@ const appendData = async (dataList) => {
 		html += `<td> ${name}, ${catchPhrase}, ${bs},  </td> `;
 
 		html += `<td class='todo'> <a> To-Do List </a>  </td> `;
+		goto_todo(i);
+
 		html += `<td class='album'> <a> Album </a>  </td> `;
 
-
 		html += `</tr>`;
-
 	}
 	document.getElementById("data").innerHTML = html;
 }
 
-todos = document.getElementsByClassName('todo');
-todos.addEventListener('click', () => {
-	userid = document.getElementsByClassName('userid');
-	location.replace('/to-dolist.html')
-});
+// albums = document.getElementsByClassName('album');
+// albums.addEventListener('dbclick', () => {
+// 	location.replace('/album.html')
+// });
 
-todos = document.getElementsByClassName('album');
-albums.addEventListener('dbclick', () => {
-	location.replace('/album.html')
-});
+const goto_todo = (i) => {
+	let todos = document.getElementsByClassName('todo');
+	todos[i].addEventListener('dbclick', () => {
+		userid = i+1;
+		location.replace('/to-dolist.html')
+	});
+}
+
+// t = document.body.firstElementChild;
+		// userid = t.rows[i].rowIndex;
+		// userid = document.getElementsByClassName(userid);
