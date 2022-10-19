@@ -7,30 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User-Data</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-    <script  src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-    <table class="table table-info table-hover border border-dark">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Username</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Address</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Website</th>
-                <th scope="col">Company</th>
-                <th scope="col" >To-Do List</th>
-                <th scope="col" >Album</th>
-            </tr>
-        </thead>
-        <tbody id="data">
-            <script type="module" src="/userdata.js"></script>
+    <div class="container-sm m-5">
 
-        </tbody>
-    </table>
+        <table class="table table-info table-hover border border-dark m-5 ">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">To-Do List</th>
+                    <th scope="col">Album</th>
+                </tr>
+            </thead>
+            <tbody id="data">
+                <script type="module" src="/userdata.js"></script>
+
+            </tbody>
+        </table>
+    </div>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 </body>

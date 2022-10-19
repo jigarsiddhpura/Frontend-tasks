@@ -13,7 +13,8 @@ sendGetRequest();
 
 // import {userid} from './userdata.js';
 
-let usid = window.localStorage.getItem("userId");
+let usid = localStorage.getItem("userId");
+// usid = parseInt(usid);
 
 const appendlist = async (dataList) => {
     let html = ``;

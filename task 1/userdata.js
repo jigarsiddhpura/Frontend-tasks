@@ -44,44 +44,23 @@ const appendData = async (dataList) => {
 		var username = obj["username"];
 		html += `<td> ${username} </td> `;
 
-		var email = obj["email"];
-		html += `<td> ${email} </td> `;
+		html += `<td class='todo'> <a href="to-dolist.html" onClick="goto_todo(${i})"> To-Do List </a>  </td> `;
+		// NOTE : above in onClick , C is capital for js 
 
-		var street = obj["address"]["street"];
-		var suite = obj["address"]["suite"];
-		var city = obj["address"]["city"];
-		var zipcode = obj["address"]["zipcode"];
-		var lat = obj["address"]["geo"]["lat"];
-		var lng = obj["address"]["geo"]["lng"];
-		html += `<td> ${street},${suite},${city},${zipcode}, Lat: ${lat},Lng: ${lng},  </td> `;
-
-		var phone = obj["phone"];
-		html += `<td> ${phone} </td> `;
-
-		var website = obj["website"];
-		html += `<td> ${website} </td> `;
-
-		var name = obj["company"]["name"];
-		var catchPhrase = obj["company"]["catchPhrase"];
-		var bs = obj["company"]["bs"];
-		html += `<td> ${name}, ${catchPhrase}, ${bs},  </td> `;
-
-		html += `<td class='todo'> <a onclick="goto_todo(${i})"> To-Do List </a>  </td> `;
-
-		html += `<td class='album'> <a> Album </a>  </td> `;
+		html += `<td class='album'> <a href="#" onClick="#"> Album </a>  </td> `;
 
 		html += `</tr>`;
 	}
 	document.getElementById("data").innerHTML = html;
 }
 
-
-goto_todo = (i) => {
-		alert("error")
-		usid = i + 1;
-		// export { userid };
-		// export default userid;
-		window.localStorage.setItem("userid","usid");
-		location.replace('/to-dolist.html')
+// onClick={() => goto_do(id)} , goto_todo(${i})
+function goto_todo(id){
+	alert("error");
+	// usid = i + 1;
+	// export { userid };	
+	// export default userid;
+	localStorage.setItem("userid", id);
+	// location.replace('/to-dolist.html')
 }
 
