@@ -44,23 +44,23 @@ const appendData = async (dataList) => {
 		var username = obj["username"];
 		html += `<td> ${username} </td> `;
 
-		html += `<td class='todo'> <a href="to-dolist.html" onClick="goto_todo(${i})"> To-Do List </a>  </td> `;
-		// NOTE : above in onClick , C is capital for js 
+		html += `<td class='todo'> <a href="to-dolist.html" onclick="goto_todo(${i+1})"> To-Do List </a>  </td> `;
 
-		html += `<td class='album'> <a href="#" onClick="#"> Album </a>  </td> `;
+		html += `<td class='album'> <a href="gallery.html" onclick="goto_albums(${i+1})"> Album </a>  </td> `;
 
 		html += `</tr>`;
 	}
 	document.getElementById("data").innerHTML = html;
 }
 
-// onClick={() => goto_do(id)} , goto_todo(${i})
+// onClick={() => goto_do(id)}
 function goto_todo(id){
-	alert("error");
-	// usid = i + 1;
-	// export { userid };	
-	// export default userid;
 	localStorage.setItem("userid", id);
 	// location.replace('/to-dolist.html')
 }
+function goto_albums(id){
+	alert("error");
+	localStorage.setItem("userid", id);
+}
+
 
