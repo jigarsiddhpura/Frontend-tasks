@@ -21,7 +21,7 @@ const appendlist = async (dataList) => {
     for (var i = 0; i < dataList.length; i++) {
         var obj = dataList[i];
         if (obj["userId"] == userid) {
-            html += `<tr id='row${i+1}'>`;
+            html += `<tr id='row${i + 1}'>`;
 
             var id = obj["id"];
             html += `<td> ${id} </td> `;
@@ -48,18 +48,6 @@ const appendlist = async (dataList) => {
     document.getElementById("tdlist").innerHTML = html;
 }
 
-// const deleteTodoItem = async (id) => {
-//     try{
-//         const base_url = 'https://jsonplaceholder.typicode.com'
-//         const response = await axios.delete(`${base_url}/todos/${id-1}`);
-//         console.log(`Deleted ToDo ID: `, id);
-//         return response.data;
-//     }
-//     catch(errors){
-//         console.log(errors);
-//     }
-// }
-
 // IF I MAKE BELOW FUNCTIONS ASYNC GIVES ERROR: UNEXPECTED TOKEN ')'
 
 function deleteTodoItem(id) {
@@ -70,37 +58,95 @@ function deleteTodoItem(id) {
             //     'Content-type': 'application/json'
             // }
         });
-        let sr_no = (id%20);
+        let sr_no = (id % 20);
         console.log(sr_no);
-        // document.getElementById("todo_table").deleteRow(sr_no);
-        document.getElementById(`row${sr_no}`).remove();
+        document.getElementById("todo_table").deleteRow(sr_no);
+        // document.getElementById(`row${sr_no}`).remove();
+
+        // UNABLE TO USE GETELEMENTSBYCLASSNAME ABOVE
         console.log(`item ${id} deleted`);
 
     }
     catch (errors) {
-        console.log("hey jigar" + errors);
+        console.log("hey jigar " + errors);
     }
 }
+
+// if( ('#flexCheckDefault').is(':checked') ) {
+//     console.log("works");
+// }
+
+let checkbox = document.getElementById("flexCheckDefault");
+checkbox.addEventListener( "change" , () => {
+    if (checkbox.checked) {
+        t = document.getElementById("todo_table").rows.length;
+        console.log(t);
+        for (var i = 0; i < 20; i++) {
+            rnum = t.getElementsByTagName("tr")[i];
+            cnum = rnum.getElementsByTagName("td")[2];
+            if(cnum == false){
+                console.log(i);
+            }
+
+        }
+
+    }
+    else{
+        console.log("ooops");
+    }
+})
+
+const edit_prompt = async () => {
+    const ipAPI = '//api.ipify.org?format=json'
+
+    const inputValue = fetch(ipAPI)
+        .then(response => response.json())
+        .then(data => data.ip)
+
+    const { value: new_todo } = await Swal.fire({
+        title: 'Enter your new To-do item',
+        input: 'text',
+        inputLabel: 'To-do item',
+        inputValue: inputValue,
+        showCancelButton: true,
+        inputValidator: (value) => {
+            if (!value) {
+                return 'You need to write something!'
+            }
+        }
+    })
+
+    if (new_todo) {
+        Swal.fire(`Updated To-do : ${new_todo}`)
+    }
+    return new_todo;
+}
+
 
 function editTodoItem(id) {
     try {
         let idContainer = document.getElementById(id);
-        let edit = prompt("Enter the update ", "Edit here");
-
-        fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+        let edit = edit_prompt();
+        edit.then(
+            result => {  
+                fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
             method: 'PATCH',
             body: JSON.stringify({
-                "title": edit,
+                "title": result,
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         })
             .then((response) => response.json())
-            // .then((json) => console.log(json));
             .then(json => {
                 idContainer.innerText = `${json.title}`
             })
+            }
+        );
+
+
+        
     }
     catch (errors) {
         console.log("hey jigar " + errors);

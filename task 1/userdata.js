@@ -15,7 +15,8 @@ const sendGetRequest = async () => {
 
 sendGetRequest();
 
-// CAN USE FETCH INSTEAD OF GET
+// CAN USE BELOW FETCH CODE INSTEAD OF AXIOS GET
+
 // const sendGetRequest = async () => {
 // 	try {
 // 		fetch('https://jsonplaceholder.typicode.com/users')
@@ -56,10 +57,11 @@ const appendData = async (dataList) => {
 // onClick={() => goto_do(id)}
 function goto_todo(id){
 	localStorage.setItem("userid", id);
+	// ANY OTHER PLACES IN THIS PROG WHERE I CAN USE LOCAL STORAGE
+
 	// location.replace('/to-dolist.html')
 }
 function goto_albums(id){
-	alert("redirecting to album");
 	localStorage.setItem("userid", id);
 }
 
