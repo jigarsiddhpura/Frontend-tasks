@@ -12,32 +12,50 @@ const sendGetRequest = async () => {
 sendGetRequest();
 
 let albumId = localStorage.getItem("userid");
-// console.log(albumId);
+console.log(albumId);
 
 const appendlist = async (photoList) => {
-    let html = ``;
+    
+    var html = `<div class="container">
+    <div class="row row-cols-3">`;
 
-    // for (var i = 0; i < 50; i++) {
-        var obj = photoList[0];
-        // if(photoList["userId"] == albumId){
+    for (var i = 0; i < 3; i++) {
+        var obj = photoList[i];
+        if (obj["albumId"] == albumId) {
+
 
             var url = obj["url"];
+            var title = obj["title"];
             // html += `<img src=${url} class="img-thumbnail" alt="image">`;
-            // var album = document.getElementsByClassName('albums');
-            // var img = document.createElement('img');
-            // img.src = url;
-            // document.getElementById('body').appendChild(img);
+    //         html += `<div class="card m-1" style="width: 18rem;">
+    //     <img src="${url}" class="card-img-top" alt="image1">
+    //         <div class="card-body">
+    //             <h5 class="card-title">${title}</h5>
+    //         </div>
+    // </div>`
 
+            html += `
+            <div class="col">
+            <div class="card m-1" style="width: 18rem;">
+            <img src="${url}" class="card-img-top" alt="image1">
+                <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                </div>
+                </div>
+            </div>`
+            // console.log("inside if");
+            // console.log(html);
 
+        }
+        else {
+            console.log("in else");
+        }
+        
 
-            var title = obj["title"]; 
-            html += `${title} `;
-    
-        // }
-        // else{
-        //     i--;
-        // }
-
-    // }
-    document.getElementsByClassName("albums").innerHTML = html;
+        // document.getElementById("albums").innerHTML = html;
+    }
+    html += `
+        </div>
+    </div>`
+    document.getElementById("albums").innerHTML = html;
 }

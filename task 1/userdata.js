@@ -59,7 +59,7 @@ function goto_todo(id){
 	// location.replace('/to-dolist.html')
 }
 function goto_albums(id){
-	alert("error");
+	alert("redirecting to album");
 	localStorage.setItem("userid", id);
 }
 
