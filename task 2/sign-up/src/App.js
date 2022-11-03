@@ -7,6 +7,7 @@ import Signup from './Components/signup';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() { 
+  
   return (
     <div className='LoginPg'> 
     {/* <Login/> */}
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Login/>}>
           </Route>
         </Routes>
+      
     </Router>
     </div>
   );
