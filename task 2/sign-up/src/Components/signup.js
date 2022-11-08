@@ -5,17 +5,14 @@ import {
   Avatar,
   TextField,
   FormControlLabel,
-  Checkbox,
-  Link ,
   Button,
-  Typography,FormControl , FormLabel , RadioGroup , Radio 
+  FormControl , FormLabel , RadioGroup , Radio 
 } from "@mui/material";
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 
 const Signup = () => {
   const paperStyle = {
     padding: 20,
-    height: "93vh",
     width: "420px",
     margin: "20px auto",
   };
@@ -59,6 +56,8 @@ const Signup = () => {
     const validateForm = (formValues) => {
       const errors = {}
       const regex_email =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      const regex_password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+      const regex_phone = /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
       if(!formValues.username) {
         errors.username = 'Username is required!';
       }
@@ -71,14 +70,17 @@ const Signup = () => {
       if(!formValues.password) {
         errors.password = 'Password is required!';
       }
-      else if(formValues.password.length < 4){
-        errors.password = 'Password must be greater than 4 characters';
+      else if(!formValues.password.match(regex_password)){
+        errors.password = 'Password must contain min 8 characters, 1 uppercase, 1 lowercase & 1 number';
       }
       if(!(formValues.password === formValues.confirm_password)) {
         errors.confirm_password = 'Password not confirmed!';
       }
       if(!formValues.number) {
         errors.number = 'Contact number is required!';
+      }
+      else if(!formValues.number.match(regex_phone)){
+        errors.number = 'Enter a valid contact number';
       }
       // console.log(errors);
       return errors;

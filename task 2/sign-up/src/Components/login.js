@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // import changePg from './index';
@@ -25,6 +25,50 @@ const Login = () => {
   const textFieldStyle = { margin: "10px" };
   const checkboxStyle = { position: "relative", right: "28%" };
   const btnStyle = {margin:'5px  '}
+  const errorStyle = {display:"flex" , align:"left" ,margin:'-1px', color:'red' }
+
+  const initialValues = {username:"",  password:""};
+
+  const [formValues , setFormValues] = useState(initialValues);
+  const [formErrors , setFormErrors] = useState({});
+  const [isSubmit , setIsSubmit] = useState(false);
+
+  const handleChange = (e) => {
+    const {name , value} = e.target;
+    setFormValues({...formValues , [name]: value});
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validateForm(formValues));
+    setIsSubmit(true);
+  };
+
+  useEffect(() => {
+    console.log(formErrors);
+    if(Object.keys(formErrors).length === 0 && isSubmit){
+      console.log(formValues);
+    }
+  }, [formErrors])
+
+  const validateForm = (formValues) => {
+    const errors = {};
+    const regex_password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if(!formValues.username) {
+      errors.username = 'Username is required!';
+    }
+    if(!formValues.email) {
+      errors.email = 'Email is required!';
+    }
+    if(!formValues.password) {
+      errors.password = 'Password is required!';
+    }
+    else if(!formValues.password.match(regex_password)){
+      errors.password = 'Password must contain min 8 characters, 1 uppercase, 1 lowercase & 1 number';
+    }
+    return errors;
+    
+  };
 
   return (
     <Grid>
@@ -43,7 +87,11 @@ const Login = () => {
             fullWidth
             required
             style={textFieldStyle}
+            name='username'
+            onChange={handleChange}
+            value={formValues.username}
           />
+          <p style={errorStyle}>{formErrors.username}</p>
           <TextField
             id="outlined-basic"
             label="Password"
@@ -53,7 +101,11 @@ const Login = () => {
             fullWidth
             required
             style={textFieldStyle}
+            name='password'
+            onChange={handleChange}
+            value={formValues.password}
           />
+          <p style={errorStyle}>{formErrors.password}</p>
 
           <FormControlLabel
             control={<Checkbox color="success" />}
@@ -61,7 +113,7 @@ const Login = () => {
             style={checkboxStyle}
           />
 
-          <Button variant="contained" color="success" style={btnStyle} fullWidth>
+          <Button variant="contained" color="success" style={btnStyle} fullWidth onClick={handleSubmit}>
             SIGN IN
           </Button>
 
