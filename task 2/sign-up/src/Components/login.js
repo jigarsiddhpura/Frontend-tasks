@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
+import axios from 'axios';
 
 const Login = () => {
   const paperStyle = {
@@ -27,7 +28,7 @@ const Login = () => {
   const btnStyle = {margin:'5px  '}
   const errorStyle = {display:"flex" , align:"left" ,margin:'-1px', color:'red' }
 
-  const initialValues = {username:"",  password:""};
+  const initialValues = {email:"",  password:""};
 
   const [formValues , setFormValues] = useState(initialValues);
   const [formErrors , setFormErrors] = useState({});
@@ -40,6 +41,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    postData();
     setFormErrors(validateForm(formValues));
     setIsSubmit(true);
   };
@@ -53,10 +55,7 @@ const Login = () => {
 
   const validateForm = (formValues) => {
     const errors = {};
-    const regex_password = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if(!formValues.username) {
-      errors.username = 'Username is required!';
-    }
+    const regex_password = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     if(!formValues.email) {
       errors.email = 'Email is required!';
     }
@@ -70,8 +69,25 @@ const Login = () => {
     
   };
 
+  const postData = async () => {
+    try{
+      axios.post('https://therecipepool.pythonanywhere.com/account/login/' , {
+        "email" : formValues.email ,
+        "password" : formValues.password 
+      })
+      .then(response => console.log("posting data ...",response))
+      .catch(err => console.log(err))
+    }
+    catch(err){
+      console.log("error is",err);
+    }
+  }
+
   return (
     <Grid>
+      <form>
+      <pre> {JSON.stringify(formValues)} </pre>
+      
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
           <Avatar style={avatarStyle}>
@@ -81,15 +97,15 @@ const Login = () => {
 
           <TextField
             id="outlined-basic"
-            label="Username"
-            placeholder="Enter Username"
+            label="Email"
+            placeholder="Enter Email"
             variant="outlined"
             fullWidth
             required
             style={textFieldStyle}
-            name='username'
+            name='email'
             onChange={handleChange}
-            value={formValues.username}
+            value={formValues.email}
           />
           <p style={errorStyle}>{formErrors.username}</p>
           <TextField
@@ -113,7 +129,11 @@ const Login = () => {
             style={checkboxStyle}
           />
 
-          <Button variant="contained" color="success" style={btnStyle} fullWidth onClick={handleSubmit}>
+          <Button variant="contained" 
+          color="success"
+          style={btnStyle} 
+          fullWidth 
+          onClick={handleSubmit}>
             SIGN IN
           </Button>
 
@@ -131,6 +151,7 @@ const Login = () => {
           </Typography>
         </Grid>
       </Paper>
+      </form>
     </Grid>
   )
 }
