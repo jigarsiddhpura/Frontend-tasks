@@ -112,7 +112,6 @@ const Signup = () => {
 
   return (
     <Grid align="center">
-      <pre> {JSON.stringify(formValues)} </pre>
       <form >
       
       <Paper elevation={10} style={paperStyle}>
