@@ -74,6 +74,9 @@ const Login = () => {
     return errors;
   };
 
+  const [accessToken , setAccessToken] = useState('');
+  const [refreshToken , setRefreshToken] = useState('');
+
   const postData = async () => {
     try {
       axios
@@ -82,8 +85,11 @@ const Login = () => {
           password: formValues.password,
         })
         .then((response) => {
-          localStorage.setItem("refresh_token", response.data.refresh);
-          localStorage.setItem("access_token", response.data.access);
+          // localStorage.setItem("refresh_token", response.data.refresh);
+          // localStorage.setItem("access_token", response.data.access);
+          setAccessToken(response.data.access);
+          setRefreshToken(response.data.refresh);
+          token2(response);
         })
         .catch((err) => console.log("error in postData try : ",err));
     } catch (err) {
@@ -92,45 +98,31 @@ const Login = () => {
   };
 
 
-  axios.interceptors.response.use(function (response) {
+  const token2 = (response) => {
     axios.post("https://therecipepool.pythonanywhere.com/account/token-refresh/" , {
-      refresh: localStorage.getItem("refresh_token"),
+      refresh: refreshToken,
     } ,
       {
         headers: {
-          'Authorization' : 'Bearer' + localStorage.getItem("access_token"),
+          'Authorization' : 'Bearer' + accessToken,
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }
     ).then((response) => {
-      localStorage.setItem("refreshToken", response.data.refresh);
-      localStorage.setItem("accessToken", response.data.access);
+      setRefreshToken(response.data.refresh);
+      setAccessToken(response.data.access);
+      localStorage.setItem("accessToken", accessToken);
       console.log("Logged in");
-    })
+      window.location.href = '/home'
+    }
+    ).catch((err) => console.log("error in token2  : ",err));
+    
+    
 
     return response;
-    }, function(error) {
-    console.log("error in response interceptor",error);
-    return Promise.reject(error);
-  });
+    }
 
-  // const axiosInstance = axios.create({
-  //   baseURL: baseURL,
-  //   timeout: 60000,
-  //   headers: {
-  //     Authorization: localStorage.getItem("access_token")
-  //       ? "JWT" + localStorage.getItem("access_token")
-  //       : null,
-  //     "Content-type": "application/json",
-  //     accept: "application/json",
-  //   },
-  // });
-
-  
-
-
-
-  return (
+return (
     <Grid>
       <form>
         <Paper elevation={10} style={paperStyle}>
@@ -181,7 +173,8 @@ const Login = () => {
               fullWidth
               onClick={handleSubmit}
             >
-              SIGN IN
+              
+              SIGN IN 
             </Button>
 
             <Typography>
